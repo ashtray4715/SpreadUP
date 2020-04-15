@@ -11,4 +11,10 @@
     <string name="advertising_failed_to_start">failed to start</string>
     <string name="advertising_failed_to_stop">failed to stop</string>
 
+    <string name="scanning_starting">starting</string>
+    <string name="scanning_started">started</string>
+    <string name="scanning_stopped">stopped</string>
+    <string name="scanning_failed_to_start">failed to start</string>
+    <string name="scanning_failed_to_stop">failed to stop</string>
+
 </resources>
