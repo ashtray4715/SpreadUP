@@ -22,6 +22,17 @@ public class FragmentHome extends MyFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
+        v.findViewById(R.id.AdvertiseButtonForShowingAdvertiseFragment).setOnClickListener(v1 -> advertiseButtonPressed());
+        v.findViewById(R.id.ScanButtonForShowingScanningFragment).setOnClickListener(v1 -> scanButtonPressed());
+        return v;
+    }
+
+    private void advertiseButtonPressed() {
+        myFragmentCallBacks.showFragment(MyFragmentName.FRAGMENT_ADVERTISING);
+    }
+
+    private void scanButtonPressed() {
+        myFragmentCallBacks.showFragment(MyFragmentName.FRAGMENT_SCANNING);
     }
 }
