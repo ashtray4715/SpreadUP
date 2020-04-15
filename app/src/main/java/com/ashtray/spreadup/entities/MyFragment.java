@@ -1,7 +1,6 @@
 package com.ashtray.spreadup.entities;
 
 import android.content.Context;
-import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -36,9 +35,6 @@ public abstract class MyFragment extends Fragment {
 
     //currently showing fragment must have to keep an way to control back pressed
     public abstract boolean handleBackButtonPressed();
-
-    //currently showing fragment must have to keep an way to control menu item selection
-    public abstract void handleMenuItemSelection(MenuItem menuItem);
 
     public interface MyFragmentCallBacks{
         void showFragment(MyFragmentName myFragmentName);

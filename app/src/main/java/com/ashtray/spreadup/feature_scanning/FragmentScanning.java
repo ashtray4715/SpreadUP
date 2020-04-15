@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,17 +37,9 @@ public class FragmentScanning extends MyFragment {
     }
 
     @Override
-    public boolean handleBackButtonPressed() {
-        DTManager.getInstance().stopScanning();
-        myFragmentCallBacks.showFragment(MyFragmentName.FRAGMENT_HOME);
-        return true;
-    }
-
-    @Override
-    public void handleMenuItemSelection(MenuItem menuItem) {
-        if(menuItem.getItemId() == android.R.id.home) {
-            handleBackButtonPressed();
-        }
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -72,6 +66,27 @@ public class FragmentScanning extends MyFragment {
         super.onActivityCreated(savedInstanceState);
         myFragmentCallBacks.setBackButtonEnabled(true);
         myFragmentCallBacks.setActivityTitle(SpreadUpApplication.getInstance().getString(R.string.fragment_title_scanning));
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            handleBackButtonPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean handleBackButtonPressed() {
+        DTManager.getInstance().stopScanning();
+        myFragmentCallBacks.showFragment(MyFragmentName.FRAGMENT_HOME);
+        return true;
     }
 
     public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.DiscoveredItemViewHolder> {

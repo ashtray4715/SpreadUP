@@ -4,11 +4,14 @@ import android.os.Bundle;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.ashtray.spreadup.R;
@@ -25,17 +28,9 @@ public class FragmentAdvertising extends MyFragment {
     }
 
     @Override
-    public boolean handleBackButtonPressed() {
-        new Handler().postDelayed(() -> DTManager.getInstance().stopAdvertising(), 100);
-        myFragmentCallBacks.showFragment(MyFragmentName.FRAGMENT_HOME);
-        return true;
-    }
-
-    @Override
-    public void handleMenuItemSelection(MenuItem menuItem) {
-        if(menuItem.getItemId() == android.R.id.home) {
-            handleBackButtonPressed();
-        }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -56,6 +51,27 @@ public class FragmentAdvertising extends MyFragment {
         super.onActivityCreated(savedInstanceState);
         myFragmentCallBacks.setBackButtonEnabled(true);
         myFragmentCallBacks.setActivityTitle(SpreadUpApplication.getInstance().getString(R.string.fragment_title_advertising));
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            handleBackButtonPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean handleBackButtonPressed() {
+        new Handler().postDelayed(() -> DTManager.getInstance().stopAdvertising(), 100);
+        myFragmentCallBacks.showFragment(MyFragmentName.FRAGMENT_HOME);
+        return true;
     }
 
     private class DTManagerAdvertisingCallBackHandler implements DTManager.DTManagerAdvertiserCallBack {

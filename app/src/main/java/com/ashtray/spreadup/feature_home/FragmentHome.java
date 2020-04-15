@@ -3,10 +3,12 @@ package com.ashtray.spreadup.feature_home;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.ashtray.spreadup.R;
@@ -20,13 +22,9 @@ public class FragmentHome extends MyFragment {
     }
 
     @Override
-    public boolean handleBackButtonPressed() {
-        return false;
-    }
-
-    @Override
-    public void handleMenuItemSelection(MenuItem menuItem) {
-        // there is no back button in the home fragment
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -42,6 +40,17 @@ public class FragmentHome extends MyFragment {
         super.onActivityCreated(savedInstanceState);
         myFragmentCallBacks.setBackButtonEnabled(false);
         myFragmentCallBacks.setActivityTitle(SpreadUpApplication.getInstance().getString(R.string.fragment_title_home));
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+    }
+
+    @Override
+    public boolean handleBackButtonPressed() {
+        return false;
     }
 
     private void advertiseButtonPressed() {

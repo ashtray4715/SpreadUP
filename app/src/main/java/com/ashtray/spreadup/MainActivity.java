@@ -1,6 +1,5 @@
 package com.ashtray.spreadup;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -8,7 +7,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -34,12 +32,6 @@ public class MainActivity extends AppCompatActivity implements MyFragment.MyFrag
         myAdView.setVisibility(View.GONE);
 
         showFragment(MyFragment.MyFragmentName.FRAGMENT_HOME);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        myFragmentObject.handleMenuItemSelection(item);
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -91,6 +83,15 @@ public class MainActivity extends AppCompatActivity implements MyFragment.MyFrag
 
     @Override
     public void showFragment(MyFragment.MyFragmentName myFragmentName) {
+
+        //before changing the fragment we should change the menu
+        //as call back this function will call onPrepareOptionsMenu method
+//        boolean con1 = myFragmentObject instanceof FragmentConnected && myFragmentName != MyFragment.MyFragmentName.FRAGMENT_CONNECTED;
+//        boolean con2 = !(myFragmentObject instanceof  FragmentConnected) && myFragmentName == MyFragment.MyFragmentName.FRAGMENT_CONNECTED;
+//        if( con2 ) {
+//            super.invalidateOptionsMenu();
+//        }
+
         switch (myFragmentName) {
             case FRAGMENT_HOME:
                 myFragmentObject = new FragmentHome();

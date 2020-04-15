@@ -3,6 +3,8 @@ package com.ashtray.spreadup.feature_connected;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +21,6 @@ import com.ashtray.spreadup.SpreadUpApplication;
 import com.ashtray.spreadup.entities.MyFragment;
 import com.gobinda.DTConnectedClient;
 import com.gobinda.DTManager;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class FragmentConnected extends MyFragment {
 
@@ -31,15 +32,20 @@ public class FragmentConnected extends MyFragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_connected, container, false);
-
-        BottomNavigationView bottomNavigationView = v.findViewById(R.id.BottomNavigationViewForConnectedOptions);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new MyNavigationItemSelectedListener());
 
         DTManager.getInstance().setDtManagerConnCallBack(new DTManagerConnCallBackHandler());
         textViewForShowingConnectionStatus = v.findViewById(R.id.TextViewForShowingConnectionStatus);
         updateConnectionStatus();
+
+        showSendDataFragment();
 
         return v;
     }
@@ -52,20 +58,33 @@ public class FragmentConnected extends MyFragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_for_connected_options, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            handleBackButtonPressed();
+        }else if (item.getItemId() == R.id.navigation_send_file) {
+            showSendDataFragment();
+        } else if(item.getItemId() == R.id.navigation_receiver) {
+            showReceivingStatusFragment();
+        } else if(item.getItemId() == R.id.navigation_sender) {
+            showSendingStatusFragment();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public boolean handleBackButtonPressed() {
         return false;
     }
 
-    @Override
-    public void handleMenuItemSelection(MenuItem menuItem) {
-        if(menuItem.getItemId() == android.R.id.home) {
-            handleBackButtonPressed();
-        }
-    }
-
-    private boolean showReceivingStatusFragment() {
+    private void showReceivingStatusFragment() {
         if(currentShowingFragment != null && currentShowingFragment instanceof FragmentReceivingStatus) {
-            return false;
+            return;
         }
         if(getActivity() != null) {
             getActivity().runOnUiThread(()->{
@@ -77,12 +96,11 @@ public class FragmentConnected extends MyFragment {
                 fragmentTransaction.commit();
             });
         }
-        return true;
     }
 
-    private boolean showSendingStatusFragment() {
+    private void showSendingStatusFragment() {
         if(currentShowingFragment != null && currentShowingFragment instanceof FragmentSendingStatus) {
-            return false;
+            return;
         }
         if(getActivity() != null) {
             getActivity().runOnUiThread(()->{
@@ -94,12 +112,11 @@ public class FragmentConnected extends MyFragment {
                 fragmentTransaction.commit();
             });
         }
-        return true;
     }
 
-    private boolean showSendDataFragment() {
+    private void showSendDataFragment() {
         if(currentShowingFragment != null && currentShowingFragment instanceof FragmentSendData) {
-            return false;
+            return;
         }
         if(getActivity() != null) {
             getActivity().runOnUiThread(()->{
@@ -111,7 +128,6 @@ public class FragmentConnected extends MyFragment {
                 fragmentTransaction.commit();
             });
         }
-        return true;
     }
 
     private void updateConnectionStatus() {
@@ -149,19 +165,4 @@ public class FragmentConnected extends MyFragment {
         }
     }
 
-    private class MyNavigationItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_send_file:
-                    return showSendDataFragment();
-                case R.id.navigation_receiver:
-                    return showReceivingStatusFragment();
-                case R.id.navigation_sender:
-                    return showSendingStatusFragment();
-            }
-            return false;
-        }
-    }
 }
