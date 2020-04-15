@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_send_file"
+        android:title="Send File" />
+
+    <item
+        android:id="@+id/navigation_receiver"
+        android:title="Receiver" />
+
+    <item
+        android:id="@+id/navigation_sender"
+        android:title="Sender" />
+</menu>

@@ -8,4 +8,7 @@
     <color name="connected_color">#32CD32</color>
     <color name="disconnected_color">#aa3333</color>
 
+
+    <color name="white">#ffffff</color>
+
 </resources>
