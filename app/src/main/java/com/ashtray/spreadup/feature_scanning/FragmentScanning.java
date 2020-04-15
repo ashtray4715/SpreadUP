@@ -33,7 +33,9 @@ public class FragmentScanning extends MyFragment {
 
     @Override
     public boolean handleBackButtonPressed() {
-        return false;
+        DTManager.getInstance().stopScanning();
+        myFragmentCallBacks.showFragment(MyFragmentName.FRAGMENT_HOME);
+        return true;
     }
 
     @Override
