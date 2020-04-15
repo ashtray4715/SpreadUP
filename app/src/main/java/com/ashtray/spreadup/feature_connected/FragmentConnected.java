@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -21,6 +22,8 @@ import com.ashtray.spreadup.SpreadUpApplication;
 import com.ashtray.spreadup.entities.MyFragment;
 import com.gobinda.DTConnectedClient;
 import com.gobinda.DTManager;
+
+import java.util.Objects;
 
 public class FragmentConnected extends MyFragment {
 
@@ -79,7 +82,12 @@ public class FragmentConnected extends MyFragment {
 
     @Override
     public boolean handleBackButtonPressed() {
-        return false;
+        if(DTManager.getInstance().getConnectedClient() != null) {
+            this.showAlertDialogForGoingBackToHome(); // since client is connected
+        } else { // since client is not connected so directly show the home fragment
+            new Thread(() -> myFragmentCallBacks.showFragment(MyFragmentName.FRAGMENT_HOME)).start();
+        }
+        return true;
     }
 
     private void showReceivingStatusFragment() {
@@ -128,6 +136,21 @@ public class FragmentConnected extends MyFragment {
                 fragmentTransaction.commit();
             });
         }
+    }
+
+    private void showAlertDialogForGoingBackToHome() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
+        builder.setTitle("Go back to Home!");
+        builder.setMessage("Data transfer will be stopped and device will be disconnected?");
+        builder.setPositiveButton("YES", (dialog, which) -> {
+            //TODO - have to stop data sending and receiving
+            DTManager.getInstance().disconnect();
+            dialog.dismiss();
+            new Thread(() -> myFragmentCallBacks.showFragment(MyFragmentName.FRAGMENT_HOME)).start();
+        });
+        builder.setNegativeButton("NO", (dialog, which) -> dialog.dismiss());
+        AlertDialog alert2 = builder.create();
+        alert2.show();
     }
 
     private void updateConnectionStatus() {
