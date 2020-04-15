@@ -19,4 +19,6 @@
     <string name="scanning_failed_to_start">failed to start</string>
     <string name="scanning_failed_to_stop">failed to stop</string>
 
+    <string name="connection_status">Connected with: </string>
+
 </resources>
