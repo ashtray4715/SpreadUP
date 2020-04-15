@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/TextViewForShowingConnectionStatus"
@@ -9,9 +11,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:background="#32CD32"
+        android:background="@color/connected_color"
         android:textColor="#000000"
         android:text="@string/useless"
         android:textSize="13sp"/>
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayoutForConnectedOptions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/TextViewForShowingConnectionStatus"/>
 
 </RelativeLayout>

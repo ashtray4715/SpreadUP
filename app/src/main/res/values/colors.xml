@@ -3,4 +3,9 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+
+    <color name="connected_color">#32CD32</color>
+    <color name="disconnected_color">#aa3333</color>
+
 </resources>
