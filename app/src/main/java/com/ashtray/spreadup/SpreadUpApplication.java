@@ -4,7 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
+import com.gobinda.DTManager;
 import com.google.android.gms.ads.MobileAds;
 
 public class SpreadUpApplication extends Application {
@@ -30,6 +32,8 @@ public class SpreadUpApplication extends Application {
             MobileAds.initialize(SpreadUpApplication.getInstance(), "ca-app-pub-3940256099942544~3347511713");
             mobileAdsInitialized = true;
         }
+
+        DTManager.getInstance().setDTLogHandler(new DTManagerLogHandler());
     }
 
     public boolean isInternetAvailable() {
@@ -37,5 +41,12 @@ public class SpreadUpApplication extends Application {
         if(connectivityManager == null) return false;
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private static class DTManagerLogHandler implements DTManager.DTManagerLog {
+        @Override
+        public void d(String s) {
+            Log.d("[SU]: ", s);
+        }
     }
 }

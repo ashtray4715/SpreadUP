@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">Spread UP</string>
+    <string name="useless">useless</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="advertising_starting">starting</string>
+    <string name="advertising_started">started</string>
+    <string name="advertising_stopped">stopped</string>
+    <string name="advertising_failed_to_start">failed to start</string>
+    <string name="advertising_failed_to_stop">failed to stop</string>
+
 </resources>
