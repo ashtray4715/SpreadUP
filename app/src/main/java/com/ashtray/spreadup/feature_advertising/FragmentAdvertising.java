@@ -4,11 +4,15 @@ import android.os.Bundle;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.ashtray.spreadup.R;
+import com.ashtray.spreadup.SpreadUpApplication;
 import com.ashtray.spreadup.entities.MyFragment;
 import com.gobinda.DTManager;
 
@@ -28,6 +32,13 @@ public class FragmentAdvertising extends MyFragment {
     }
 
     @Override
+    public void handleMenuItemSelection(MenuItem menuItem) {
+        if(menuItem.getItemId() == android.R.id.home) {
+            handleBackButtonPressed();
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_advertising, container, false);
         textViewForShowingAdvertisingStatus = v.findViewById(R.id.TextViewForShowingAdvertisingStatus);
@@ -38,6 +49,13 @@ public class FragmentAdvertising extends MyFragment {
         new Handler().postDelayed(() -> DTManager.getInstance().startAdvertising("gobinda_ad"), 100);
 
         return v;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        myFragmentCallBacks.setBackButtonEnabled(true);
+        myFragmentCallBacks.setActivityTitle(SpreadUpApplication.getInstance().getString(R.string.fragment_title_advertising));
     }
 
     private class DTManagerAdvertisingCallBackHandler implements DTManager.DTManagerAdvertiserCallBack {

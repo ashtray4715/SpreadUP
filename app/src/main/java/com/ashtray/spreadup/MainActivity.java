@@ -1,5 +1,6 @@
 package com.ashtray.spreadup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -7,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -32,6 +34,12 @@ public class MainActivity extends AppCompatActivity implements MyFragment.MyFrag
         myAdView.setVisibility(View.GONE);
 
         showFragment(MyFragment.MyFragmentName.FRAGMENT_HOME);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        myFragmentObject.handleMenuItemSelection(item);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -110,5 +118,23 @@ public class MainActivity extends AppCompatActivity implements MyFragment.MyFrag
     @Override
     public void showToastMessage(String message, boolean forShortTime) {
         runOnUiThread(() -> Toast.makeText(this, message, (forShortTime)? Toast.LENGTH_SHORT:Toast.LENGTH_LONG).show());
+    }
+
+    @Override
+    public void setActivityTitle(String title) {
+        runOnUiThread(() -> {
+            if(getSupportActionBar() != null){
+                getSupportActionBar().setTitle(title);
+            }
+        });
+    }
+
+    @Override
+    public void setBackButtonEnabled(boolean enabled) {
+        runOnUiThread(() -> {
+            if(getSupportActionBar() != null){
+                getSupportActionBar().setDisplayHomeAsUpEnabled(enabled);
+            }
+        });
     }
 }
